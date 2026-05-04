@@ -1,0 +1,36 @@
+1. Usuarios (/api/usuarios)
+LISTAR (GET): http://localhost:3000/api/usuarios
+CREAR (POST):
+{
+  "nombre": "Juan Pérez",
+  "email": "juan@email.com",
+  "cedula": "12345678",
+  "password": "password123"
+}
+
+ACTUALIZAR (PATCH): http://localhost:3000/api/usuarios/1
+{
+  "nombre": "Juan Alberto Pérez"}
+ELIMINAR (DELETE): http://localhost:3000/api/usuarios/1
+2. Cuentas (/api/cuentas)
+LISTAR (GET): http://localhost:3000/api/cuentas
+CREAR (POST):
+
+  "numero_cuenta": "SAV-998877",
+  "tipo_cuenta": "Ahorros",
+  "saldo": 500.00,
+  "usuario_id": 1
+
+ACTUALIZAR (PATCH): http://localhost:3000/api/cuentas/1
+Body (JSON): {"saldo": 750.25}
+3. Transacciones (/api/transacciones)
+LISTAR (GET): http://localhost:3000/api/transacciones
+CREAR (POST):
+Body (JSON):
+json
+{
+  "monto": 100.00,
+  "tipo": "Transferencia",
+  "cuenta_origen_id": 1,
+  "cuenta_destino_id": 2
+}
