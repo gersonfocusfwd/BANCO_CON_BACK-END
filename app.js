@@ -18,8 +18,10 @@ app.use(express.json());
 const usuarioRoutes = require('./routes/usuarioRoutes');
 const cuentaRoutes = require('./routes/cuentaRoutes');
 const transaccionRoutes = require('./routes/transaccionRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 // Registro de rutas en la API
+app.use('/api/auth', authRoutes);
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/cuentas', cuentaRoutes);
 app.use('/api/transacciones', transaccionRoutes);

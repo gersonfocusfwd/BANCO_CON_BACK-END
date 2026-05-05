@@ -1,5 +1,6 @@
 'use strict';
 const { Model } = require('sequelize');
+const bcrypt = require('bcryptjs');
 
 module.exports = (sequelize, DataTypes) => {
   class Usuario extends Model {
@@ -47,7 +48,28 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Usuario',
     tableName: 'usuarios',
     underscored: true,
+    hooks: {
+      beforeCreate: async (usuario) => {
+        if (usuario.password) {
+          // 🟢 encriptarContraseña
+          const salt = await bcrypt.genSalt(10);
+          usuario.password = await bcrypt.hash(usuario.password, salt);
+        }
+      },
+      beforeUpdate: async (usuario) => {
+        if (usuario.changed('password')) {
+          // 🟢 encriptarContraseña
+          const salt = await bcrypt.genSalt(10);
+          usuario.password = await bcrypt.hash(usuario.password, salt);
+        }
+      }
+    }
   });
+
+  // 🟢 validarPassword
+  Usuario.prototype.validarPassword = async function (password) {
+    return await bcrypt.compare(password, this.password);
+  };
 
   return Usuario;
 };
