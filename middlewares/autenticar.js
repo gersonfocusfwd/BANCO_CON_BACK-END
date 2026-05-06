@@ -8,13 +8,12 @@ const { Usuario } = require('../models');
  */
 const autenticarToken = async (req, res, next) => {
   try {
-    // 🟢 obtenerEncabezadoAuth
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
+    // 🟢 obtenerTokenDeCookies (Seguridad mejorada)
+    const token = req.cookies.token;
 
     if (!token) {
       return res.status(401).json({ 
-        mensaje: 'Acceso denegado. No se proporcionó un token.' 
+        mensaje: 'Acceso denegado. No hay una sesión activa.' 
       });
     }
 
@@ -30,15 +29,32 @@ const autenticarToken = async (req, res, next) => {
       });
     }
 
-    // Adjuntar el usuario a la petición
+    // Adjuntar el usuario y su rol a la petición
     req.usuario = usuario;
     next();
   } catch (error) {
     return res.status(403).json({ 
-      mensaje: 'Token no válido o expirado.',
+      mensaje: 'Sesión expirada o no válida.',
       error: error.message 
     });
   }
 };
 
-module.exports = autenticarToken;
+/**
+ * Middleware para verificar si el usuario es Administrador
+ */
+const esAdministrador = (req, res, next) => {
+  if (req.usuario && req.usuario.rol === 'admin') {
+    next();
+  } else {
+    return res.status(403).json({ 
+      mensaje: 'Acceso restringido. Se requieren permisos de administrador.' 
+    });
+  }
+};
+
+module.exports = {
+  autenticarToken,
+  esAdministrador
+};
+

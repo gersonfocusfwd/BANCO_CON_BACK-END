@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const cuentaController = require('../controllers/CuentaController');
+const { autenticarToken } = require('../middlewares/autenticar');
+
+// Aplicar middleware de autenticación a todas las rutas de este archivo
+router.use(autenticarToken);
 
 /**
  * /////////////////////////////////////////////////////////////

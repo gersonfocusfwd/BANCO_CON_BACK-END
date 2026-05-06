@@ -62,18 +62,26 @@ const login = async (req, res) => {
 
     // 🟢 generarTokenJWT
     const token = jwt.sign(
-      { id: usuario.id, email: usuario.email },
+      { id: usuario.id, email: usuario.email, rol: usuario.rol },
       process.env.JWT_SECRET,
       { expiresIn: '8h' }
     );
 
+    // 🟢 enviarTokenEnCookie (Seguridad mejorada)
+    res.cookie('token', token, {
+      httpOnly: true, // Protege contra XSS
+      secure: process.env.NODE_ENV === 'production', // Solo HTTPS en producción
+      sameSite: 'lax', // Protege contra CSRF
+      maxAge: 8 * 60 * 60 * 1000 // 8 horas
+    });
+
     res.status(200).json({
       mensaje: 'Inicio de sesión exitoso',
-      token,
       usuario: {
         id: usuario.id,
         nombre: usuario.nombre,
-        email: usuario.email
+        email: usuario.email,
+        rol: usuario.rol
       }
     });
   } catch (error) {
@@ -84,7 +92,27 @@ const login = async (req, res) => {
   }
 };
 
+// 🟢 obtenerPerfil
+const perfil = async (req, res) => {
+  res.status(200).json({
+    usuario: {
+      id: req.usuario.id,
+      nombre: req.usuario.nombre,
+      email: req.usuario.email,
+      rol: req.usuario.rol
+    }
+  });
+};
+
+// 🟢 cerrarSesion
+const logout = async (req, res) => {
+  res.clearCookie('token');
+  res.status(200).json({ mensaje: 'Sesión cerrada exitosamente' });
+};
+
 module.exports = {
   registrar,
-  login
+  login,
+  logout,
+  perfil
 };
