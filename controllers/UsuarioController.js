@@ -99,9 +99,34 @@ const eliminarUsuario = async (req, res) => {
   }
 };
 
+/**
+ * [FUNCIÓN: gestionar_roles]
+ * Descripción: Permite a un administrador cambiar el rol de un usuario.
+ */
+const gestionar_roles = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { rol } = req.body;
+
+    if (!['admin', 'cliente'].includes(rol)) {
+      return res.status(400).json({ ok: false, msg: 'Rol no válido' });
+    }
+
+    const [actualizado] = await Usuario.update({ rol }, { where: { id } });
+
+    if (actualizado) {
+      return res.json({ ok: true, msg: `Rol actualizado a ${rol}` });
+    }
+    throw new Error('Usuario no encontrado');
+  } catch (error) {
+    res.status(400).json({ ok: false, msg: 'Error al gestionar rol', error: error.message });
+  }
+};
+
 module.exports = {
   listarUsuarios,
   crearUsuario,
   actualizarUsuario,
-  eliminarUsuario
+  eliminarUsuario,
+  gestionar_roles
 };

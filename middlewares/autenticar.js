@@ -6,9 +6,8 @@ const { Usuario } = require('../models');
  * // MIDDLEWARE DE AUTENTICACIÓN JWT
  * /////////////////////////////////////////////////////////////
  */
-const autenticarToken = async (req, res, next) => {
+const verificar_token = async (req, res, next) => {
   try {
-    // 🟢 obtenerTokenDeCookies (Seguridad mejorada)
     const token = req.cookies.token;
 
     if (!token) {
@@ -17,10 +16,7 @@ const autenticarToken = async (req, res, next) => {
       });
     }
 
-    // 🟢 verificarTokenJWT
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    
-    // 🟢 buscarUsuarioEnSesion
     const usuario = await Usuario.findByPk(decoded.id);
 
     if (!usuario) {
@@ -29,7 +25,6 @@ const autenticarToken = async (req, res, next) => {
       });
     }
 
-    // Adjuntar el usuario y su rol a la petición
     req.usuario = usuario;
     next();
   } catch (error) {
@@ -40,10 +35,7 @@ const autenticarToken = async (req, res, next) => {
   }
 };
 
-/**
- * Middleware para verificar si el usuario es Administrador
- */
-const esAdministrador = (req, res, next) => {
+const verificar_rol_admin = (req, res, next) => {
   if (req.usuario && req.usuario.rol === 'admin') {
     next();
   } else {
@@ -54,7 +46,7 @@ const esAdministrador = (req, res, next) => {
 };
 
 module.exports = {
-  autenticarToken,
-  esAdministrador
+  verificar_token,
+  verificar_rol_admin
 };
 

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const usuarioController = require('../controllers/UsuarioController');
-const { autenticarToken, esAdministrador } = require('../middlewares/autenticar');
+const { verificar_token, verificar_rol_admin } = require('../middlewares/autenticar');
 
 /**
  * /////////////////////////////////////////////////////////////
@@ -10,12 +10,14 @@ const { autenticarToken, esAdministrador } = require('../middlewares/autenticar'
  */
 
 // Todas las rutas de gestión de usuarios requieren ser administrador
-router.use(autenticarToken, esAdministrador);
+router.use(verificar_token, verificar_rol_admin);
 
 router.get('/', usuarioController.listarUsuarios);
 router.post('/', usuarioController.crearUsuario);
 router.patch('/:id', usuarioController.actualizarUsuario);
 router.delete('/:id', usuarioController.eliminarUsuario);
+router.patch('/roles/:id', usuarioController.gestionar_roles);
+
 
 
 module.exports = router;

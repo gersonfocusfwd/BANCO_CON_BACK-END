@@ -7,8 +7,8 @@ const jwt = require('jsonwebtoken');
  * /////////////////////////////////////////////////////////////
  */
 
-// 🟢 registrarUsuario
-const registrar = async (req, res) => {
+// 🟢 registrar_usuario_nuevo
+const registrar_usuario_nuevo = async (req, res) => {
   try {
     const { nombre, email, cedula, password } = req.body;
 
@@ -42,8 +42,8 @@ const registrar = async (req, res) => {
   }
 };
 
-// 🟢 iniciarSesion
-const login = async (req, res) => {
+// 🟢 iniciar_sesion
+const iniciar_sesion = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -104,15 +104,15 @@ const perfil = async (req, res) => {
   });
 };
 
-// 🟢 cerrarSesion
-const logout = async (req, res) => {
+// 🟢 cerrar_sesion
+const cerrar_sesion = async (req, res) => {
   res.clearCookie('token');
   res.status(200).json({ mensaje: 'Sesión cerrada exitosamente' });
 };
 
 module.exports = {
-  registrar,
-  login,
-  logout,
+  registrar_usuario_nuevo,
+  iniciar_sesion,
+  cerrar_sesion,
   perfil
 };
