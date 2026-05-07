@@ -64,4 +64,10 @@ const iniciarServidor = async () => {
   }
 };
 
-iniciarServidor();
+// Exportar app para pruebas con Supertest
+module.exports = app;
+
+// Solo iniciar el servidor si este archivo se ejecuta directamente
+if (require.main === module) {
+  iniciarServidor();
+}
