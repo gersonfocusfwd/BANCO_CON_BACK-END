@@ -13,7 +13,8 @@ router.use(verificar_token);
  */
 
 router.get('/', transaccionController.listarTransacciones);
-router.post('/', transaccionController.crearTransaccion);
+router.get('/mi-historial', transaccionController.miHistorial);
+router.post('/transferir', transaccionController.realizarTransferencia);
 router.patch('/:id', transaccionController.actualizarTransaccion);
 router.delete('/:id', transaccionController.eliminarTransaccion);
 

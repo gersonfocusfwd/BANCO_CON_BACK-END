@@ -13,6 +13,7 @@ router.use(verificar_token);
  */
 
 router.get('/', cuentaController.listarCuentas);
+router.get('/mis-cuentas', cuentaController.misCuentas);
 router.post('/', cuentaController.crearCuenta);
 router.patch('/:id', cuentaController.actualizarCuenta);
 router.delete('/:id', cuentaController.eliminarCuenta);

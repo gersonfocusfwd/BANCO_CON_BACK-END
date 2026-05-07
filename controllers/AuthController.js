@@ -92,14 +92,17 @@ const iniciar_sesion = async (req, res) => {
   }
 };
 
-// 🟢 obtenerPerfil
-const perfil = async (req, res) => {
+// 🟢 perfil
+const perfil = (req, res) => {
+  // El usuario ya fue buscado y adjuntado por el middleware verificar_token
+  // Pero necesitamos asegurarnos de que incluya sus cuentas para el dashboard
   res.status(200).json({
     usuario: {
       id: req.usuario.id,
       nombre: req.usuario.nombre,
       email: req.usuario.email,
-      rol: req.usuario.rol
+      rol: req.usuario.rol,
+      cuentas: req.usuario.cuentas || []
     }
   });
 };

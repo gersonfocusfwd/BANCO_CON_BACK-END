@@ -17,7 +17,13 @@ const verificar_token = async (req, res, next) => {
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const usuario = await Usuario.findByPk(decoded.id);
+    const usuario = await Usuario.findByPk(decoded.id, {
+      include: [
+        { model: require('../models').Cuenta, as: 'cuentas' },
+        { model: require('../models').Tarjeta, as: 'tarjetas' }
+      ]
+    });
+
 
     if (!usuario) {
       return res.status(401).json({ 
@@ -36,7 +42,7 @@ const verificar_token = async (req, res, next) => {
 };
 
 const verificar_rol_admin = (req, res, next) => {
-  if (req.usuario && req.usuario.rol === 'admin') {
+  if (req.usuario && (req.usuario.rol === 'admin' || req.usuario.rol === 'superadmin')) {
     next();
   } else {
     return res.status(403).json({ 

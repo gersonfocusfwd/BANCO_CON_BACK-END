@@ -1,0 +1,374 @@
+/* =============================================================
+   VALIDACION.CSS — Banco CON
+   Sistema de Validación Crediticia Integral
+   Hacienda CR + Registro Nacional CR
+   Mobile-responsive | Glassmorphism Design
+   ============================================================= */
+
+/* ── Contenedor principal ─────────────────────────────────── */
+.validacion-container {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-bottom: 3rem;
+}
+
+/* ── Encabezado de sección ───────────────────────────────── */
+.validacion-header {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.validacion-header-icono {
+  width: 58px;
+  height: 58px;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.35);
+}
+
+.validacion-titulo {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0 0 4px;
+}
+
+.validacion-subtitulo {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+/* ── Panel de búsqueda ───────────────────────────────────── */
+.validacion-buscador {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.validacion-instruccion {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.validacion-input-grupo {
+  display: flex;
+  gap: 1rem;
+}
+
+.validacion-input-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.validacion-input-icono {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+
+.validacion-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  padding: 14px 16px 14px 46px;
+  color: #fff;
+  font-size: 1rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.validacion-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.validacion-input::placeholder { color: #475569; }
+
+/* ── Botón principal ─────────────────────────────────────── */
+.validacion-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 26px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.validacion-btn:hover:not(:disabled) {
+  background: #4f46e5;
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+  transform: translateY(-1px);
+}
+
+.validacion-btn:disabled { opacity: 0.65; cursor: not-allowed; }
+
+/* ── Mensajes de error ───────────────────────────────────── */
+.validacion-error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: rgba(244, 63, 94, 0.1);
+  border: 1px solid rgba(244, 63, 94, 0.3);
+  border-radius: 12px;
+  color: #f43f5e;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+/* ── Banner de pre-aprobación ────────────────────────────── */
+.banner-preaprobado {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.5rem 2rem;
+  border-radius: 18px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.banner-preaprobado--verde {
+  background: linear-gradient(135deg, rgba(16,185,129,0.18), rgba(5,150,105,0.08));
+  border: 1.5px solid rgba(16,185,129,0.4);
+}
+
+.banner-preaprobado--rojo {
+  background: linear-gradient(135deg, rgba(244,63,94,0.15), rgba(190,18,60,0.06));
+  border: 1.5px solid rgba(244,63,94,0.4);
+}
+
+.banner-icono-grande { flex-shrink: 0; }
+
+.banner-etiqueta {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.75;
+  margin-bottom: 6px;
+}
+
+.banner-titulo-grande {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0 0 6px;
+}
+
+.banner-titulo-grande--verde { color: #10b981; }
+.banner-titulo-grande--rojo  { color: #f43f5e; }
+
+.banner-descripcion {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ── Grid de tarjetas de sección ─────────────────────────── */
+.validacion-secciones {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.validacion-seccion-ancha {
+  grid-column: 1 / -1;
+}
+
+/* ── Tarjeta de sección (glassmorphism) ─────────────────── */
+.seccion-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.seccion-encabezado {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.seccion-encabezado-icono {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icono--hacienda  { background: rgba(99,102,241,0.15); color: #818cf8; }
+.icono--vehiculos { background: rgba(245,158,11,0.15);  color: #f59e0b; }
+.icono--inmuebles { background: rgba(16,185,129,0.15);  color: #10b981; }
+.icono--resumen   { background: rgba(168,85,247,0.15);  color: #c084fc; }
+
+.seccion-titulo {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 2px;
+}
+
+.seccion-fuente {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ── Fila de datos ───────────────────────────────────────── */
+.dato-fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.dato-fila:last-child { border-bottom: none; }
+
+.dato-etiqueta {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.dato-valor {
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.dato-valor--verde   { color: #10b981; }
+.dato-valor--rojo    { color: #f43f5e; }
+.dato-valor--amarillo { color: #f59e0b; }
+.dato-valor--blanco  { color: #f1f5f9; }
+
+/* ── Tarjeta de ítem (vehículo / propiedad) ─────────────── */
+.item-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  padding: 1.1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: background 0.2s;
+}
+
+.item-card:hover { background: rgba(255,255,255,0.07); }
+
+.item-titulo {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0;
+}
+
+.item-detalle {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+}
+
+.item-valor {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-top: 4px;
+}
+
+/* ── Estado vacío ────────────────────────────────────────── */
+.estado-vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
+/* ── Badge de puntaje SUGEF ──────────────────────────────── */
+.puntaje-bar-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.puntaje-bar-track {
+  height: 8px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.puntaje-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.6s ease;
+}
+
+/* ── Aviso legal ─────────────────────────────────────────── */
+.validacion-aviso {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+}
+
+/* ── Icono spin ──────────────────────────────────────────── */
+.spin { animation: spin 1s linear infinite; }
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── RESPONSIVE MÓVIL ────────────────────────────────────── */
+@media (max-width: 768px) {
+  .validacion-input-grupo { flex-direction: column; }
+  .validacion-btn { justify-content: center; width: 100%; }
+  .validacion-secciones { grid-template-columns: 1fr; }
+  .banner-preaprobado { flex-direction: column; text-align: center; }
+  .banner-titulo-grande { font-size: 1.2rem; }
+  .validacion-titulo { font-size: 1.5rem; }
+  .seccion-ancha { grid-column: 1; }
+}
+
+@media (max-width: 480px) {
+  .dato-fila { flex-direction: column; align-items: flex-start; gap: 4px; }
+}

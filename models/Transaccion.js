@@ -34,8 +34,17 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     tipo: {
-      type: DataTypes.STRING, // Ejemplo: 'Transferencia', 'Depósito', 'Retiro'
-      allowNull: false
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'transferencia'
+    },
+    descripcion: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    estado: {
+      type: DataTypes.ENUM('pendiente', 'completada', 'rechazada'),
+      defaultValue: 'completada'
     },
     fecha: {
       type: DataTypes.DATE,
@@ -43,11 +52,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     cuenta_origen_id: {
       type: DataTypes.INTEGER,
-      allowNull: true // Puede ser null si es un depósito externo
+      allowNull: true
     },
     cuenta_destino_id: {
       type: DataTypes.INTEGER,
-      allowNull: true // Puede ser null si es un retiro
+      allowNull: true
     }
   }, {
     sequelize,

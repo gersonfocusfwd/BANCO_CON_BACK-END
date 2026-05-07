@@ -1,4 +1,4 @@
-const { Usuario } = require('../models');
+const { Usuario, Cuenta } = require('../models');
 
 /**
  * /////////////////////////////////////////////////////////////
@@ -8,15 +8,18 @@ const { Usuario } = require('../models');
 
 /**
  * [FUNCIÓN: listarUsuarios]
- * Descripción: Obtiene la lista completa de usuarios registrados en el sistema.
+ * Descripción: Obtiene la lista completa de usuarios registrados en el sistema, incluyendo sus cuentas.
  */
 const listarUsuarios = async (req, res) => {
   try {
-    const usuarios = await Usuario.findAll();
+    const usuarios = await Usuario.findAll({
+      include: [{ model: Cuenta, as: 'cuentas' }]
+    });
     res.status(200).json({
       ok: true,
       data: usuarios
     });
+
   } catch (error) {
     res.status(500).json({
       ok: false,
@@ -33,9 +36,21 @@ const listarUsuarios = async (req, res) => {
 const crearUsuario = async (req, res) => {
   try {
     const nuevoUsuario = await Usuario.create(req.body);
+    
+    // Generar número de cuenta aleatorio de 10 dígitos
+    const numero_cuenta = Math.floor(1000000000 + Math.random() * 9000000000).toString();
+    
+    // Crear cuenta por defecto para el usuario
+    await Cuenta.create({
+      usuario_id: nuevoUsuario.id,
+      numero_cuenta: numero_cuenta,
+      tipo_cuenta: 'ahorros',
+      saldo: 0
+    });
+
     res.status(201).json({
       ok: true,
-      msg: 'Usuario creado exitosamente',
+      msg: 'Usuario y cuenta creados exitosamente',
       data: nuevoUsuario
     });
   } catch (error) {
@@ -81,6 +96,13 @@ const actualizarUsuario = async (req, res) => {
 const eliminarUsuario = async (req, res) => {
   try {
     const { id } = req.params;
+
+    // 🛡️ Protección de Super Admin
+    const usuarioObjetivo = await Usuario.findByPk(id);
+    if (usuarioObjetivo && usuarioObjetivo.rol === 'superadmin') {
+      return res.status(403).json({ ok: false, msg: 'No se puede eliminar a un Super Administrador.' });
+    }
+
     const eliminado = await Usuario.destroy({ where: { id } });
     
     if (eliminado) {
@@ -108,7 +130,13 @@ const gestionar_roles = async (req, res) => {
     const { id } = req.params;
     const { rol } = req.body;
 
-    if (!['admin', 'cliente'].includes(rol)) {
+    // 🛡️ Protección de Super Admin
+    const usuarioObjetivo = await Usuario.findByPk(id);
+    if (usuarioObjetivo && usuarioObjetivo.rol === 'superadmin') {
+      return res.status(403).json({ ok: false, msg: 'No se puede modificar el rol de un Super Administrador.' });
+    }
+
+    if (!['admin', 'cliente', 'superadmin'].includes(rol)) {
       return res.status(400).json({ ok: false, msg: 'Rol no válido' });
     }
 

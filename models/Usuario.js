@@ -15,6 +15,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'usuario_id',
         as: 'cuentas'
       });
+      // Un usuario puede tener muchas tarjetas
+      this.hasMany(models.Tarjeta, {
+        foreignKey: 'usuario_id',
+        as: 'tarjetas'
+      });
     }
   }
 
@@ -44,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     rol: {
-      type: DataTypes.ENUM('admin', 'cliente'),
+      type: DataTypes.ENUM('admin', 'cliente', 'superadmin'),
       defaultValue: 'cliente',
       allowNull: false
     }

@@ -30,18 +30,26 @@ const usuarioRoutes = require('./routes/usuarioRoutes');
 const cuentaRoutes = require('./routes/cuentaRoutes');
 const transaccionRoutes = require('./routes/transaccionRoutes');
 const authRoutes = require('./routes/authRoutes');
+const tarjetaRoutes = require('./routes/tarjetaRoutes');
+const creditoRoutes = require('./routes/creditoRoutes');
+const prestamoRoutes = require('./routes/prestamoRoutes');
+const extraRoutes = require('./routes/extraRoutes');
 
 // Registro de rutas en la API
 app.use('/api/auth', authRoutes);
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/cuentas', cuentaRoutes);
 app.use('/api/transacciones', transaccionRoutes);
+app.use('/api/tarjetas', tarjetaRoutes);
+app.use('/api/credito', creditoRoutes);
+app.use('/api/prestamos', prestamoRoutes);
+app.use('/api/extra', extraRoutes);
 
 // Función de inicio de servidor
 const iniciarServidor = async () => {
   try {
     // Sincronización automática de modelos con la base de datos
-    await db.sequelize.sync({ alter: true });
+    await db.sequelize.sync();
     console.log('\x1b[32m%s\x1b[0m', '✓ Conexión y sincronización de tablas exitosa.');
 
     app.listen(PORT, () => {

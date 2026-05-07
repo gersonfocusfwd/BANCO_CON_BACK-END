@@ -101,8 +101,31 @@ const eliminarCuenta = async (req, res) => {
   }
 };
 
+/**
+ * [FUNCIÓN: misCuentas]
+ * Descripción: Obtiene las cuentas que pertenecen exclusivamente al usuario autenticado.
+ */
+const misCuentas = async (req, res) => {
+  try {
+    const cuentas = await Cuenta.findAll({
+      where: { usuario_id: req.usuario.id }
+    });
+    res.status(200).json({
+      ok: true,
+      data: cuentas
+    });
+  } catch (error) {
+    res.status(500).json({
+      ok: false,
+      msg: 'Error al obtener tus cuentas',
+      error: error.message
+    });
+  }
+};
+
 module.exports = {
   listarCuentas,
+  misCuentas,
   crearCuenta,
   actualizarCuenta,
   eliminarCuenta

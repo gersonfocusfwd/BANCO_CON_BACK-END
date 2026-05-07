@@ -1,0 +1,333 @@
+/* =============================================================
+   VERIFICADOR CREDITICIO — Banco CON
+   Sistema de consulta SUGEF / Hacienda CR
+   ============================================================= */
+
+/* Contenedor principal */
+.verificador-container {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-bottom: 3rem;
+}
+
+/* Encabezado */
+.verificador-header {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.verificador-header-icon {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, var(--primary), #a855f7);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+}
+
+.verificador-titulo {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.verificador-subtitulo {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* Panel de búsqueda */
+.verificador-buscador {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.verificador-instruccion {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.verificador-input-group {
+  display: flex;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.verificador-input-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.verificador-input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+
+.verificador-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  padding: 14px 16px 14px 44px;
+  color: #fff;
+  font-size: 1rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.verificador-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.verificador-input::placeholder {
+  color: #475569;
+}
+
+/* Botón de verificación */
+.verificador-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 24px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.verificador-btn:hover:not(:disabled) {
+  background: #4f46e5;
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+  transform: translateY(-1px);
+}
+
+.verificador-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.verificador-btn--cargando {
+  background: #4338ca;
+}
+
+/* Alerta de error */
+.verificador-alerta-error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: rgba(244, 63, 94, 0.1);
+  border: 1px solid rgba(244, 63, 94, 0.3);
+  border-radius: 12px;
+  color: #f43f5e;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* Icono giratorio */
+.spin-icon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Resultado */
+.verificador-resultado {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  animation: fadeIn 0.5s ease-out;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.resultado--apto {
+  border-color: rgba(16, 185, 129, 0.4) !important;
+}
+
+.resultado--denegado {
+  border-color: rgba(244, 63, 94, 0.4) !important;
+}
+
+/* Banner de estado */
+.resultado-banner {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 16px;
+}
+
+.banner--verde {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.08));
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #10b981;
+}
+
+.banner--rojo {
+  background: linear-gradient(135deg, rgba(244, 63, 94, 0.15), rgba(190, 18, 60, 0.08));
+  border: 1px solid rgba(244, 63, 94, 0.3);
+  color: #f43f5e;
+}
+
+.banner-icono {
+  flex-shrink: 0;
+}
+
+.banner-titulo {
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.banner-descripcion {
+  font-size: 0.875rem;
+  opacity: 0.85;
+  color: inherit;
+}
+
+/* Grid de métricas */
+.resultado-metricas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.metrica-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 1.2rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  transition: background 0.2s;
+}
+
+.metrica-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.metrica-icono {
+  color: var(--text-secondary);
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.metrica-etiqueta {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.metrica-valor {
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.metrica--verde { color: #10b981; }
+.metrica--amarillo { color: #f59e0b; }
+.metrica--rojo { color: #f43f5e; }
+
+/* Pie del resultado */
+.resultado-pie {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--glass-border);
+}
+
+.resultado-pie-texto {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.resultado-pie-fuente {
+  color: #475569;
+  font-style: italic;
+}
+
+/* Aviso legal */
+.verificador-aviso {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+}
+
+/* =====================
+   RESPONSIVE MÓVIL
+   ===================== */
+@media (max-width: 768px) {
+  .verificador-input-group {
+    flex-direction: column;
+  }
+
+  .verificador-btn {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .resultado-banner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .banner-titulo {
+    font-size: 1.1rem;
+  }
+
+  .resultado-metricas {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .resultado-pie {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .verificador-titulo {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .resultado-metricas {
+    grid-template-columns: 1fr;
+  }
+}
